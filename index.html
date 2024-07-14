@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Lista de Tareas</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">Todo List</div>
+        <div class="input.grou">
+            <input type="text" placeholder="Nueva Tarea" id="nuevaTarea">
+            <button onclick="addTask()" id="agregarTarea" style="background-color: rgb(36, 221, 36);">Agregar
+                Tarea</button>
+        </div>
+        <div class="stats">
+            <br>
+            <span>Total:</span>
+            <span id="totalTareas">0</span>
+            <br>
+            <span>Realizadas:<span id="tareasRealizadas">0</span>
+        </div>
+        <br>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Tareas</th>
+                <th>Realizada</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody id="labores">
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        function mostrarArreglo(){
+            tareas.forEach((tarea, index) => {
+                labores.innerHTML += `<td>${tarea.id}</td> <td>${tarea.descripcion}</td> <td>${tarea.realizada}</td><td><input onclick="tareasRealizadas(${index})" type="checkbox" width="10px" height="10px" data-checked="${tarea.realizada}"></td><td><button onclick="eliminarTarea(${index})" id="tareaNoRealizada"><img src="assets/Imagenes/istockphoto-1131230925-612x612.jpg" width="7px" height="7px" alt=""></button></td>`
+            })
+            totalTareas()
+            realizada()
+        }
+        let tareas = [
+        {
+                id: 1,
+                descripcion: "Hacer las Compras",
+                realizada: false
+            },
+            {
+                id: 2,
+                descripcion: "Estudiar para la Prueba",
+                realizada: false
+            },
+            {
+                id: 3,
+                descripcion: "Sacar a Pasear al Tomy",
+                realizada: false
+            }
+        ]
+        mostrarArreglo()
+        
+        function addTask() {
+            const tarea = {
+                id: 0,
+                descripcion: "",
+                realizada: false
+            }
+            if (tareas.length == 0) {
+                tarea.id = 1
+            } else {
+                let mayor = 0
+                tarea.id = mayor + 1;
+            }
+            tarea.descripcion = document.getElementById("nuevaTarea").value;
+            tareas.push(tarea)
+            let labores = document.getElementById("labores")
+            labores.innerHTML = ""
+            mostrarArreglo()
+        }
+        function eliminarTarea(id) {
+            tareas.splice(id, 1)
+            let labores = document.getElementById("labores")
+            labores.innerHTML = ""
+            mostrarArreglo()
+        }
+        function totalTareas() {
+            const total = tareas.length
+            let totalTareas = document.getElementById("totalTareas")
+            totalTareas.innerHTML = total
+        }
+        function tareasRealizadas(id) {
+            tareas[id].realizada = true
+            realizada()
+        }
+        function realizada() {
+            let total = 0
+            for (let realizada of tareas)
+                if (realizada.realizada == true){
+                    total = total + 1
+                }
+            let totalPantalla = document.getElementById("tareasRealizadas")
+            totalPantalla.innerHTML = total
+        }
+
+    </script>
+
+</body>
+
+</html>
